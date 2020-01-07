@@ -35,28 +35,48 @@ def main():
 			
 				count+=1
 				passwords.append(i)
+				
 	print(count)
-	#511
+	# 511
 
 	# Part II
-	#print(passwords)
+
+	#print(len(passwords))
 	count2=0
-	for num in range(0,len(passwords)):
-		#print(passwords[num])
-		stri=str(passwords[num])
+	wrong=[]
+	for num in passwords:
+
+		# or num in range(0,2):
+		flg=True  #assume it meets criteria
+	
+		stri=str(num)
 		#print(stri)
 		for j in range(0,len(stri)-3):
+			#if there are 2 in a row, but not three then we're ok no matter what else is in the rest of the number
 			if ( ( int(stri[j]) == int(stri[j+1]) )  and ( int(stri[j]) == int(stri[j+2]) )  ):
-				#print("yes")
-				count2+=1
-				break1
-			#else:
-				#print("no")
+				flg=False
+				print(stri,"no")
+				break
 			
+		
+			elif ( ( int(stri[j]) == int(stri[j+1]) )  and ( int(stri[j]) != int(stri[j+2]) )  ):
+					
+				print(stri,"yes")	
+		if flg:
+			count2+=1
+		else:
+			wrong.append(num)
+
 	print(count2)
+	# for num in wrong:
+	# 	print(num)
+
 	#404 -- WRONG TOO HIGH
 	#290 -- TOO LOW
-
+	#221 -- TOO LOW
+	#370 -- WRONG BUT NO DETAIL ON HIGH / LOW
+	#355 -- WRONG BUT NO DETAIL ON HIGH / LOW
+	#369 -- WRONG BUT NO DETAIL ON HIGH / LOW
 
 
 if __name__ == '__main__':
