@@ -21,13 +21,15 @@ Your puzzle input is 359282-820401
 An Elf just remembered one more important detail: the two adjacent matching digits are not part of a larger group of matching digits.
 How many different passwords within the range given in your puzzle input meet all of the criteria?
 '''
+import itertools
 
 def main():
 	passwords = []
+
 	# Part I
 	count=0
 	for i in range(359282,820402):
-		i+=1
+
 		stri = str(i)
 		if( (stri[0]==stri[1])  or (stri[1]==stri[2]) or (stri[2]==stri[3]) or (stri[3]==stri[4]) or (stri[4]==stri[5]) ):
 				
@@ -35,49 +37,25 @@ def main():
 			
 				count+=1
 				passwords.append(i)
-				
+
+
 	print(count)
 	# 511
 
+
 	# Part II
+	count=0
 
-	#print(len(passwords))
-	count2=0
-	wrong=[]
 	for num in passwords:
-
-		# or num in range(0,2):
-		flg=True  #assume it meets criteria
-	
-		stri=str(num)
-		#print(stri)
-		for j in range(0,len(stri)-3):
-			#if there are 2 in a row, but not three then we're ok no matter what else is in the rest of the number
-			if ( ( int(stri[j]) == int(stri[j+1]) )  and ( int(stri[j]) == int(stri[j+2]) )  ):
-				flg=False
-				print(stri,"no")
-				break
-			
+		# find maximum length of repeated digits
+		lnum = [int(x) for x in str(num)]
+		m = [(x[0], len(list(x[1]))) for x in itertools.groupby(lnum) ]
 		
-			elif ( ( int(stri[j]) == int(stri[j+1]) )  and ( int(stri[j]) != int(stri[j+2]) )  ):
-					
-				print(stri,"yes")	
-		if flg:
-			count2+=1
-		else:
-			wrong.append(num)
-
-	print(count2)
-	# for num in wrong:
-	# 	print(num)
-
-	#404 -- WRONG TOO HIGH
-	#290 -- TOO LOW
-	#221 -- TOO LOW
-	#370 -- WRONG BUT NO DETAIL ON HIGH / LOW
-	#355 -- WRONG BUT NO DETAIL ON HIGH / LOW
-	#369 -- WRONG BUT NO DETAIL ON HIGH / LOW
-
+		if [item for item in m if item[1]==2]:
+			count+=1
+	
+	print(count)	
+	#316
 
 if __name__ == '__main__':
 	main()
